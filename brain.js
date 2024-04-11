@@ -15,7 +15,6 @@ fetch("https://jsonplaceholder.typicode.com/posts", {
   .then(function (info) {
     let fragment = document.createDocumentFragment();
 
-
     info.forEach((element) => {
       let h2 = document.createElement("h2");
       h2.innerText = `${element.id}`;
@@ -29,7 +28,6 @@ fetch("https://jsonplaceholder.typicode.com/posts", {
       titleDiv.appendChild(p);
       fragment.appendChild(titleDiv);
 
-      
       titleDiv.addEventListener("click", function () {
         fulinfo.classList.add("active");
         let postId = this.getAttribute("data-id");
@@ -44,16 +42,44 @@ fetch("https://jsonplaceholder.typicode.com/posts", {
             newP.innerText = `${item.body}`;
 
             fulinfo.appendChild(newP);
-            closeX.addEventListener('click', function(){
-                newP.innerText=" "
-            })
+            closeX.addEventListener("click", function () {
+              newP.innerText = " ";
+            });
           });
       });
       closeX.addEventListener("click", function () {
         fulinfo.classList.remove("active");
-        
       });
     });
 
     users.appendChild(fragment);
   });
+
+//post
+let addButon = document.getElementById("add");
+let addOverlay = document.getElementById("add-post");
+let addForm = document.getElementById("form-post");
+
+addButon.addEventListener("click", function () {
+  addOverlay.classList.add("active");
+});
+
+addForm.addEventListener("submit", function (event) {
+  event.preventDefault();
+  let dataNewPost = {
+    title: event.target[0].value,
+  };
+
+  fetch("https://jsonplaceholder.typicode.com/posts", {
+    method: "POST",
+    body: JSON.stringify({
+      title: event.target[0].value,
+      userId: 11,
+    }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  })
+    .then((response) => response.json())
+    .then((json) => console.log(json));
+});
