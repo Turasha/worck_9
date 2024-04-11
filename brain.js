@@ -81,5 +81,8 @@ addForm.addEventListener("submit", function (event) {
     },
   })
     .then((response) => response.json())
-    .then((json) => console.log(json));
+    .then((json) => 
+    console.log(json));
+    addOverlay.classList.remove("active");
+    document.getElementById('title').value=" "
 });
